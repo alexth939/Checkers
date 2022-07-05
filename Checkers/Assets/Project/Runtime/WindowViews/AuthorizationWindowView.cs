@@ -28,22 +28,6 @@ namespace Runtime.WindowViews
 
           public string GetPassword() => _passwordInputField.text;
 
-          public void UnblockInteraction()
-          {
-               _emailInputField.interactable =
-                    _passwordInputField.interactable =
-                         _backButton.interactable =
-                              _signInButon.interactable = true;
-          }
-
-          public void BlockInteraction()
-          {
-               _emailInputField.interactable =
-                    _passwordInputField.interactable =
-                         _backButton.interactable =
-                              _signInButon.interactable = false;
-          }
-
           // todo implement me
           public void PlayConnectingAnimation()
           {

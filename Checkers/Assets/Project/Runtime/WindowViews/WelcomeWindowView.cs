@@ -14,18 +14,6 @@ namespace Runtime.WindowViews
           public UnityEvent OnRegisterButtonClicked => _registerButton.onClick;
           public UnityEvent OnSignInButtonClicked => _signInButton.onClick;
 
-          public void UnblockInteraction()
-          {
-               _registerButton.interactable =
-                    _signInButton.interactable = true;
-          }
-
-          public void BlockInteraction()
-          {
-               _registerButton.interactable =
-                    _signInButton.interactable = false;
-          }
-
           private void OnDestroy()
           {
                OnRegisterButtonClicked.RemoveAllListeners();

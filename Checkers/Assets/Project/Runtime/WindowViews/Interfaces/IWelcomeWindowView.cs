@@ -7,9 +7,5 @@ namespace Runtime.WindowViews
      {
           UnityEvent OnRegisterButtonClicked { get; }
           UnityEvent OnSignInButtonClicked { get; }
-
-          void UnblockInteraction();
-
-          void BlockInteraction();
      }
 }

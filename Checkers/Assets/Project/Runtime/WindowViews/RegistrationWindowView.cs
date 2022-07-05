@@ -28,24 +28,6 @@ namespace Runtime.WindowViews
 
 #endif
 
-          public void UnblockInteraction()
-          {
-               _nickNameInputField.interactable =
-                    _emailInputField.interactable =
-                         _passwordInputField.interactable =
-                              _backButton.interactable =
-                                   _registerButton.interactable = true;
-          }
-
-          public void BlockInteraction()
-          {
-               _nickNameInputField.interactable =
-                    _emailInputField.interactable =
-                         _passwordInputField.interactable =
-                              _backButton.interactable =
-                                   _registerButton.interactable = false;
-          }
-
           public string GetNickname() => _nickNameInputField.text;
 
           public string GetEmail() => _emailInputField.text;

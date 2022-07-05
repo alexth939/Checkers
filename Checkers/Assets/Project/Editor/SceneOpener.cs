@@ -15,7 +15,7 @@ public class MenuTest: MonoBehaviour
      }
 
      [MenuItem("<Open a Scene>/Game Scene")]
-     private static void OpenPlayingScene()
+     private static void OpenGameScene()
      {
           var canLeave = SaveCurrentModifiedScenesIfUserWantsTo();
           if(canLeave == false)
@@ -24,23 +24,13 @@ public class MenuTest: MonoBehaviour
           OpenScene("Assets/Scenes/GameScene.unity");
      }
 
-     [MenuItem("<Open a Scene>/Leaderboard Scene")]
-     private static void OpenLeaderboardScene()
+     [MenuItem("<Open a Scene>/Lobby Scene")]
+     private static void OpenLobbyScene()
      {
           var canLeave = SaveCurrentModifiedScenesIfUserWantsTo();
           if(canLeave == false)
                return;
 
-          OpenScene("Assets/Scenes/LeaderboardScene.unity");
-     }
-
-     [MenuItem("<Open a Scene>/Prepare Scene")]
-     private static void OpenPrepareScene()
-     {
-          var canLeave = SaveCurrentModifiedScenesIfUserWantsTo();
-          if(canLeave == false)
-               return;
-
-          OpenScene("Assets/Scenes/PrepareScene.unity");
+          OpenScene("Assets/Scenes/LobbyScene.unity");
      }
 }

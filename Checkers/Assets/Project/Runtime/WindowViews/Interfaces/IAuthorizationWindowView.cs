@@ -9,10 +9,6 @@ namespace Runtime.WindowViews
 
           string GetPassword();
 
-          void UnblockInteraction();
-
-          void BlockInteraction();
-
           UnityEvent OnGoBackRequest { get; }
           UnityEvent OnAuthorizeRequest { get; }
      }

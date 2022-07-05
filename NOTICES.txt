@@ -1,0 +1,5 @@
+used plugins:
+
+1. RainbowHierarchy 2.5.0 : license not acquired. remove plugin and empty gameObjects & missing scripts (components). or buy.
+2. FolderIcons 0.1.4 : MIT : https://github.com/WooshiiDev/Unity-Folder-Icons
+3. EasyButtons 1.3 : MIT : https://github.com/madsbangh/EasyButtons

@@ -1,6 +1,4 @@
-﻿/// <summary>
-/// version 20.6.22
-/// </summary>
+﻿// version 4.7.22
 
 using System;
 using System.Collections;
@@ -19,7 +17,7 @@ namespace Popups
           private const string WindowNotRevealedMessage = "U tryin to Hide() not completely revealed window.";
           private const string WindowNotHiddenMessage = "U tryin to Show() not completely hidden window.";
 
-          [SerializeField] private CanvasGroup _alphaLerper;
+          [SerializeField] private CanvasGroup _canvasGroup;
           private bool _isTransitting = false;
 
           private bool IsNotReadyToShow
@@ -77,7 +75,10 @@ namespace Popups
           private bool IsNotCompletelyHidden => gameObject.activeSelf;
 
           private bool IsNotCompletelyRevealed =>
-               gameObject.activeSelf == false || _alphaLerper.alpha < AlmostOne;
+               gameObject.activeSelf == false || _canvasGroup.alpha < AlmostOne;
+
+          public void BlockInteraction() => _canvasGroup.interactable = false;
+          public void UnblockInteraction() => _canvasGroup.interactable = true;
 
           public void Show(float? duration = null, Action onDone = null)
           {
@@ -86,10 +87,10 @@ namespace Popups
 
                duration ??= DefaultShowDuration;
 
-               SetupObjectToShow();
-               StartCoroutine(ShowWindow(duration.Value, onDone: () =>
+               BeginShowing();
+               StartCoroutine(ShowPopup(duration.Value, onDone: () =>
                {
-                    FinalizeShow();
+                    EndShowing();
                     onDone?.Invoke();
                }));
           }
@@ -101,59 +102,59 @@ namespace Popups
 
                duration ??= DefaultHideDuration;
 
-               SetupObjectToHide();
-               StartCoroutine(HideWindow(duration.Value, onDone: () =>
+               BeginHiding();
+               StartCoroutine(HidePopup(duration.Value, onDone: () =>
                {
-                    FinalizeHide();
+                    EndHiding();
                     onDone?.Invoke();
                }));
           }
 
-          private void SetupObjectToShow()
+          private void BeginShowing()
           {
-               _alphaLerper.alpha = 0;
+               _canvasGroup.alpha = 0;
                gameObject.SetActive(true);
                _isTransitting = true;
           }
 
-          private void SetupObjectToHide()
+          private void BeginHiding()
           {
-               _alphaLerper.alpha = 1;
+               _canvasGroup.alpha = 1;
                _isTransitting = true;
           }
 
-          private void FinalizeShow()
+          private void EndShowing()
           {
-               _alphaLerper.alpha = 1;
+               _canvasGroup.alpha = 1;
                _isTransitting = false;
           }
 
-          private void FinalizeHide()
+          private void EndHiding()
           {
-               _alphaLerper.alpha = 0;
+               _canvasGroup.alpha = 0;
                gameObject.SetActive(false);
                _isTransitting = false;
           }
 
-          private IEnumerator ShowWindow(float duration, Action onDone)
+          private IEnumerator ShowPopup(float duration, Action onDone)
           {
                for(float i = 0; i < duration; i += Time.deltaTime)
                {
                     yield return new WaitForEndOfFrame();
                     float t = Mathf.InverseLerp(0, duration, i);
-                    _alphaLerper.alpha = t;
+                    _canvasGroup.alpha = t;
                }
 
                onDone.Invoke();
           }
 
-          private IEnumerator HideWindow(float duration, Action onDone)
+          private IEnumerator HidePopup(float duration, Action onDone)
           {
                for(float i = duration; i > 0; i -= Time.deltaTime)
                {
                     yield return new WaitForEndOfFrame();
                     float t = Mathf.InverseLerp(0, duration, i);
-                    _alphaLerper.alpha = t;
+                    _canvasGroup.alpha = t;
                }
 
                onDone.Invoke();

@@ -27,3 +27,18 @@ MonoBehaviour:
   - folder: {fileID: 102900000, guid: 2d179837d2a8d734fb2f73b344de6e74, type: 3}
     folderIcon: {fileID: 2800000, guid: 6b1895b22a59355479bcd0173987b93d, type: 3}
     overlayIcon: {fileID: 0}
+  - folder: {fileID: 102900000, guid: c370036976815e741bfe6ba9607b389d, type: 3}
+    folderIcon: {fileID: 2800000, guid: 332af75304751a545b014b2d9a67f5c8, type: 3}
+    overlayIcon: {fileID: 0}
+  - folder: {fileID: 102900000, guid: d4ea53b5193879f4f89adb6f64f1c5df, type: 3}
+    folderIcon: {fileID: 2800000, guid: b5e419d773bca3740814f6236e92f59f, type: 3}
+    overlayIcon: {fileID: 0}
+  - folder: {fileID: 102900000, guid: 6ea315d0fd7389c41b19996891e99ae3, type: 3}
+    folderIcon: {fileID: 2800000, guid: 332af75304751a545b014b2d9a67f5c8, type: 3}
+    overlayIcon: {fileID: 0}
+  - folder: {fileID: 102900000, guid: d559248d61c60ae4d8c8fc2a1d912c8d, type: 3}
+    folderIcon: {fileID: 2800000, guid: 3ed3d37721d62d74fabe9c26f9e899b7, type: 3}
+    overlayIcon: {fileID: 0}
+  - folder: {fileID: 102900000, guid: 31a626485749a9b42bfc8a8b5fe4b20a, type: 3}
+    folderIcon: {fileID: 2800000, guid: fbc98d6ab620da14bbcd039127374260, type: 3}
+    overlayIcon: {fileID: 0}

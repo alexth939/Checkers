@@ -8,10 +8,6 @@ namespace Runtime.WindowViews
           UnityEvent OnGoBackRequest { get; }
           UnityEvent OnRegisterRequest { get; }
 
-          void BlockInteraction();
-
-          void UnblockInteraction();
-
           string GetNickname();
 
           string GetEmail();
