@@ -2,7 +2,7 @@ using Popups;
 
 namespace Runtime.WindowViews
 {
-     public class LobbyWindowView: PopupView, ILobbyWindowView
+     internal class LobbyWindowView: PopupView, ILobbyWindowView
      {
           
      }

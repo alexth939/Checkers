@@ -2,7 +2,7 @@
 
 namespace Runtime.WindowViews
 {
-     public sealed class ConnectingWindowView: PopupView, IConnectingWindowView
+     internal sealed class ConnectingWindowView: PopupView, IConnectingWindowView
      {
      }
 }

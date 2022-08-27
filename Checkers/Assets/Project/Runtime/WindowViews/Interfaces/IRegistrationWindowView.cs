@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace Runtime.WindowViews
 {
-     public interface IRegistrationWindowView: IPopupView
+     internal interface IRegistrationWindowView: IPopupView
      {
           UnityEvent OnGoBackRequest { get; }
           UnityEvent OnRegisterRequest { get; }

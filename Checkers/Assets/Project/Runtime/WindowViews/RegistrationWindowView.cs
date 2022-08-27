@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Runtime.WindowViews
 {
-     public sealed class RegistrationWindowView: PopupView, IRegistrationWindowView
+     internal sealed class RegistrationWindowView: PopupView, IRegistrationWindowView
      {
           [SerializeField] private TMP_InputField _nickNameInputField;
           [SerializeField] private TMP_InputField _emailInputField;

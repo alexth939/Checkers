@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Runtime.WindowViews
 {
-     public sealed class AuthorizationWindowView: PopupView, IAuthorizationWindowView
+     internal sealed class AuthorizationWindowView: PopupView, IAuthorizationWindowView
      {
           [SerializeField] private TMP_InputField _emailInputField;
           [SerializeField] private TMP_InputField _passwordInputField;
@@ -29,12 +29,12 @@ namespace Runtime.WindowViews
           public string GetPassword() => _passwordInputField.text;
 
           // todo implement me
-          public void PlayConnectingAnimation()
+          internal void PlayConnectingAnimation()
           {
                throw new NotImplementedException();
           }
 
-          public void StopConnectingAnimation()
+          internal void StopConnectingAnimation()
           {
                throw new NotImplementedException();
           }

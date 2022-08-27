@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Runtime.WindowViews
 {
-     public interface ILobbyWindowView
+     internal interface ILobbyWindowView
      {
      }
 }

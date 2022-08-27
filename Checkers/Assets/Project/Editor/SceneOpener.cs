@@ -14,14 +14,14 @@ public class MenuTest: MonoBehaviour
           OpenScene("Assets/Scenes/AuthorizationScene.unity");
      }
 
-     [MenuItem("<Open a Scene>/Game Scene")]
+     [MenuItem("<Open a Scene>/Play Scene")]
      private static void OpenGameScene()
      {
           var canLeave = SaveCurrentModifiedScenesIfUserWantsTo();
           if(canLeave == false)
                return;
 
-          OpenScene("Assets/Scenes/GameScene.unity");
+          OpenScene("Assets/Scenes/PlayScene.unity");
      }
 
      [MenuItem("<Open a Scene>/Lobby Scene")]

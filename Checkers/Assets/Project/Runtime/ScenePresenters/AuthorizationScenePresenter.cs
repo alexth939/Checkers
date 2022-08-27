@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 namespace Runtime.ScenePresenters
 {
-     public sealed class AuthorizationScenePresenter: ScenePresenter
+     internal sealed class AuthorizationScenePresenter: ScenePresenter
      {
           [SerializeField] private AuthorizationSceneContainer _dependencies;
 
@@ -101,12 +101,12 @@ namespace Runtime.ScenePresenters
           }
 
           [Serializable]
-          public sealed class AuthorizationSceneContainer
+          internal sealed class AuthorizationSceneContainer
           {
-               public ITransitionsView TransitionsView => _transitionsView;
-               public IWelcomeWindowView WelcomeWindow => _welcomeWindow;
-               public IRegistrationWindowView RegistrationWindow => _registrationWindow;
-               public IAuthorizationWindowView AuthorizationWindow => _authorizationWindow;
+               internal ITransitionsView TransitionsView => _transitionsView;
+               internal IWelcomeWindowView WelcomeWindow => _welcomeWindow;
+               internal IRegistrationWindowView RegistrationWindow => _registrationWindow;
+               internal IAuthorizationWindowView AuthorizationWindow => _authorizationWindow;
 
                [SerializeField] private WelcomeWindowView _welcomeWindow;
                [SerializeField] private RegistrationWindowView _registrationWindow;

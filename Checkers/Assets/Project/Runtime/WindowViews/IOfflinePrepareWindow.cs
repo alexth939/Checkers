@@ -1,6 +1,6 @@
 ﻿namespace Runtime.WindowViews
 {
-     public interface IOfflinePrepareWindow
+     internal interface IOfflinePrepareWindow
      {
      }
 }

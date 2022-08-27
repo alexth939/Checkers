@@ -1,14 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Runtime.GameBoard
 {
-     public interface IGameBoardView
+     internal interface IGameBoardView
      {
-          void ShowBoard(Texture2D boardTexture);
+          Vector2 SpriteSize { get; }
+
+          void Init(GameBoardMath boardMath, GameBoardGenerators boardGenerators);
+          void ShowBoard();
+          void SpawnChecker(CheckerView view, CheckerModel model);
+          void GetWorldAnchors(out Vector3 minBoardWorldAnchor, out Vector3 maxBoardWorldAnchor);
+          void MoveChecker(CheckerView checker, byte boardDestination, Action onDone = null);
+          void HightlightFields(params byte[] rawPositions);
+          void DimHightlightedFields();
      }
 }

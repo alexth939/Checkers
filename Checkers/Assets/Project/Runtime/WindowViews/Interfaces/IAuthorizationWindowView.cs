@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace Runtime.WindowViews
 {
-     public interface IAuthorizationWindowView: IPopupView
+     internal interface IAuthorizationWindowView: IPopupView
      {
           string GetEmail();
 

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace Runtime.WindowViews
 {
      [RequireComponent(typeof(CanvasGroup))]
-     public sealed class WelcomeWindowView: PopupView, IWelcomeWindowView
+     internal sealed class WelcomeWindowView: PopupView, IWelcomeWindowView
      {
           [SerializeField] private Button _registerButton;
           [SerializeField] private Button _signInButton;

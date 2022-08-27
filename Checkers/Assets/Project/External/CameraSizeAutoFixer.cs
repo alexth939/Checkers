@@ -1,20 +1,16 @@
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class CameraSizeAutoFixer:MonoBehaviour
+public class CameraSizeAutoFixer: MonoBehaviour
 {
-     [SerializeField]
-     Camera MainCamera;
-     [SerializeField]
-     Material mat;
-     [SerializeField]
-     bool gizmos_visible = false;
+     [SerializeField] Camera MainCamera;
+     [SerializeField] Material mat;
+     [SerializeField] bool gizmos_visible = false;
      //[SerializeField]
      //Rect rect;
 
-     [SerializeField]
-     [Range(1.0f,4.0f)]
-     float minimum_width = 1.0f;
+     [Range(1.0f, 4.0f)]
+     [SerializeField] float minimum_width = 1.0f;
 
 
      [SerializeField]
@@ -27,12 +23,22 @@ public class CameraSizeAutoFixer:MonoBehaviour
                     MainCamera.transform.position.x - MainCamera.orthographicSize * minimum_width,
                     MainCamera.transform.position.y,
                     MainCamera.transform.position.z)).x;
-          Debug.Log("minimum_half_width=" + minimum_half_width);
-          Debug.Log("Screen.width/2=" + Screen.width / 2);
+          //Debug.Log("minimum_half_width=" + minimum_half_width);
+          //Debug.Log("Screen.width/2=" + Screen.width / 2);
+
           if(Screen.width / 2 < minimum_half_width)
           {
-               MainCamera.orthographicSize *= minimum_half_width / (Screen.width/2);
+               MainCamera.orthographicSize = InitialCameraHeight * minimum_half_width / (Screen.width / 2);
           }
+          else
+          {
+               MainCamera.orthographicSize = InitialCameraHeight;
+          }
+          return;
+          //if(Screen.width / 2 < minimum_half_width)
+          //{
+          //     MainCamera.orthographicSize *= minimum_half_width / (Screen.width / 2);
+          //}
      }
 
      private void OnDisable()
@@ -76,8 +82,7 @@ public class CameraSizeAutoFixer:MonoBehaviour
                     MainCamera.transform.position.x - MainCamera.orthographicSize * minimum_width,
                     MainCamera.transform.position.y,
                     MainCamera.transform.position.z)).x;
-          //Debug.Log("minimum_half_width=" + minimum_half_width);
-          //Debug.Log("Screen.width/2=" + Screen.width / 2);
+
           if(Screen.width / 2 < minimum_half_width)
           {
                MainCamera.orthographicSize = InitialCameraHeight * minimum_half_width / (Screen.width / 2);

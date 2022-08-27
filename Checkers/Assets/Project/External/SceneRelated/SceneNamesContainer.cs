@@ -6,8 +6,9 @@ namespace UnityEngine.SceneManagement
 {
      public enum SceneName
      {
-          ConnectingScene,
-          PlayingScene
+          AuthorizationScene,
+          LobbyScene,
+          GameScene
      }
 
      public static class SceneManagementExtensions

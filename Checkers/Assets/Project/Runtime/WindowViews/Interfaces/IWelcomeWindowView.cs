@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace Runtime.WindowViews
 {
-     public interface IWelcomeWindowView: IPopupView
+     internal interface IWelcomeWindowView: IPopupView
      {
           UnityEvent OnRegisterButtonClicked { get; }
           UnityEvent OnSignInButtonClicked { get; }
