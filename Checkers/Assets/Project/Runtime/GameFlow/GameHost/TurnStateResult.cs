@@ -2,7 +2,7 @@
 {
      internal enum TurnStateResult
      {
-          StillRunning,
+          NotFinished,
           TimeoutOccurred,
           SuccessfullyCompleted
      }

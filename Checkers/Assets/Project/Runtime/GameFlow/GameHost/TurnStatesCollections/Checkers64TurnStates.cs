@@ -32,7 +32,7 @@ namespace Runtime.GameFlow
                {
                     TurnStateResult.SuccessfullyCompleted => new PlayerMovingState(_flowModel),
                     TurnStateResult.TimeoutOccurred => new ForcingRandomMoveState(_flowModel),
-                    TurnStateResult.StillRunning => throw new NotSupportedException("Not finished state!"),
+                    TurnStateResult.NotFinished => throw new NotSupportedException("Not finished state!"),
                     _ => throw new NotImplementedException()
                };
           }

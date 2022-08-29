@@ -1,10 +1,9 @@
-﻿using System;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 using static UnityEngine.EventSystems.PointerEventData;
 
 namespace UnityEngine.EventSystems
 {
-     public delegate void PointerEvent(object pointerCoords);
+     public delegate void PointerEvent(Vector2 pointerCoords);
 
      [RequireComponent(typeof(Graphic), typeof(RectTransform))]
      public class PointerControl: MonoBehaviour, IPointerControl, IPointerConfiguration, IPointerHandlers
@@ -14,17 +13,11 @@ namespace UnityEngine.EventSystems
           public event PointerEvent OnRightDown, OnRightMoved, OnRightUp;
 
           private RectTransform _myRectTransform;
-          private Func<Vector2, object> _coordsParseMethod = screenCoords => (Vector2)screenCoords;
 
           void IPointerConfiguration.SetPadSize(Vector2 screenSize)
           {
                _myRectTransform ??= GetComponent<RectTransform>();
                _myRectTransform.sizeDelta = screenSize;
-          }
-
-          void IPointerConfiguration.SetCoordsParseMethod(Func<Vector2, object> method)
-          {
-               _coordsParseMethod = method;
           }
 
           void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
@@ -37,7 +30,7 @@ namespace UnityEngine.EventSystems
                     _ => null
                };
 
-               var coords = _coordsParseMethod.Invoke(eventData.position);
+               var coords = eventData.position;
                HandleEvent?.Invoke(coords);
           }
 
@@ -51,7 +44,7 @@ namespace UnityEngine.EventSystems
                     _ => null
                };
 
-               var coords = _coordsParseMethod.Invoke(eventData.position);
+               var coords = eventData.position;
                HandleEvent?.Invoke(coords);
           }
 
@@ -65,7 +58,7 @@ namespace UnityEngine.EventSystems
                     _ => null
                };
 
-               var coords = _coordsParseMethod.Invoke(eventData.position);
+               var coords = eventData.position;
                HandleEvent?.Invoke(coords);
           }
      }

@@ -9,8 +9,8 @@ namespace Runtime.GameBoard
           [SerializeField] private SpriteRenderer _boardSpriteRenderer;
           [SerializeField] private SpriteRenderer _highlightingSptiteRenderer;
           [SerializeField] private Transform _boardTransform;
-          [SerializeField] private GameObject _upperPlayerStash;
-          [SerializeField] private GameObject _lowerPlayerStash;
+          [SerializeField] private Transform _upperPlayerStash;
+          [SerializeField] private Transform _lowerPlayerStash;
 
           private Func<Sprite> BoardSpriteGenerationMethod;
           private Func<byte[], Sprite> HighlightedMapGenerationMethod;
@@ -62,14 +62,22 @@ namespace Runtime.GameBoard
                _highlightingSptiteRenderer.enabled = false;
           }
 
-          public void SpawnChecker(CheckerView view, CheckerModel model)
+          public void SpawnChecker(CheckerView view, CheckerModel model, BoardSide targetStash)
           {
                if(RawToWorldParseMethod is null)
                     throw new NullReferenceException("U must init RawToWorldParseMethod first.");
 
                var worldPosition = RawToWorldParseMethod.Invoke(model.Position);
 
-               Instantiate(view, worldPosition, _boardTransform.rotation, _lowerPlayerStash.transform);
+               var stash = targetStash switch
+               {
+                    var side when side == BoardSide.LowerSide => _lowerPlayerStash,
+                    var side when side == BoardSide.UpperSide => _upperPlayerStash,
+                    var side when side == BoardSide.BothSides => throw new NotSupportedException(),
+                    _ => null
+               };
+
+               Instantiate(view, worldPosition, _boardTransform.rotation, stash);
           }
 
           public void MoveChecker(CheckerView checker, byte boardDestination, Action onDone = null)

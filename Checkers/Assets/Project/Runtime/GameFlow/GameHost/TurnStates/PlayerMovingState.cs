@@ -1,32 +1,32 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Runtime.GameBoard;
 
 namespace Runtime.GameFlow
 {
      internal sealed class PlayerMovingState: TurnState
      {
-          protected internal override TurnStateResult StateResult { get => throw new System.NotImplementedException(); protected set => throw new System.NotImplementedException(); }
+          private readonly CancellationTokenSource _timeoutAwaitingSource;
+          private BoardSide _activePlayer;
 
-          internal PlayerMovingState(GameFlowModel _flowModel)
+          internal PlayerMovingState(GameFlowModel flowModel)
           {
+               FlowModel = flowModel;
+               _timeoutAwaitingSource = new CancellationTokenSource();
           }
 
-          internal override Task ProcessAsync(BoardSide activePlayer)
+          public override async Task ProcessAsync(BoardSide activePlayer)
           {
-               throw new System.NotImplementedException();
-          }
+               _activePlayer = activePlayer;
+               CommandsChannel.OnMoveAttempt += HandleMoveAttempt;
 
-          protected override void HandlePingResponse(BoardSide sender)
-          {
-               throw new System.NotImplementedException();
+               CommandsChannel.SendTurnStarted(activePlayer);
+               await Task.Delay(TimeoutDelayPeriod, _timeoutAwaitingSource.Token).ContinueWith(SummarizeResults);
+
+               CommandsChannel.OnMoveAttempt -= HandleMoveAttempt;
           }
 
           protected override void HandleMoveAttempt(BoardSide sender, byte[] move)
-          {
-               throw new System.NotImplementedException();
-          }
-
-          protected override void SummarizeResults(Task completedTask)
           {
                throw new System.NotImplementedException();
           }

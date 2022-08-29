@@ -3,16 +3,16 @@ using Runtime.GameBoard;
 
 namespace Runtime.GameFlow
 {
-     internal sealed class GameHost
+     internal sealed class GameHost: IGameHost
      {
           private readonly ITurnStatesCollection _statesCollection;
 
           internal GameHost(CheckersGameType gameType, GameFlowModel flowModel)
           {
-               _statesCollection = gameType.InitTurnStatesCollection(flowModel);
+               _statesCollection = gameType.InitTurnStates(flowModel);
           }
 
-          internal void BeginGame()
+          public void BeginGame()
           {
                IterateTurnsAsync();
           }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using ProjectDefaults;
@@ -8,12 +9,13 @@ namespace Runtime.GameBoard
 {
      internal delegate void MoveEventArgs(BoardSide player, byte[] move);
 
-     internal sealed class GameBoardPresenter
+     internal sealed class GameBoardPresenter: IGameBoardPresenter
      {
           private readonly GameBoardGenerators _boardGenerators;
           private readonly GameBoardMath _boardMath;
           private readonly IGameBoardModel _boardModel;
           private readonly IGameBoardView _boardView;
+          private BoardViewMode? _currentViewMode;
 
           internal GameBoardPresenter(CheckersGameType gameType)
           {
@@ -24,12 +26,42 @@ namespace Runtime.GameBoard
                _boardGenerators = new GameBoardGenerators(_boardModel, _boardMath);
 
                _boardView.Init(_boardMath, _boardGenerators);
-               ConfigurePointerControl(_boardMath);
           }
 
           ~GameBoardPresenter()
           {
                _boardMath.Dispose();
+          }
+
+          public event Action<byte> OnBoardFieldClicked;
+
+          internal BoardViewMode ViewMode
+          {
+               get => _currentViewMode.Value;
+               set
+               {
+                    if(value == _currentViewMode)
+                         return;
+
+                    UnsubscribeFromCurrentPointer();
+                    SubscribeToOtherPointer();
+                    _currentViewMode = value;
+
+                    void UnsubscribeFromCurrentPointer()
+                    {
+                         if(_currentViewMode.HasValue)
+                              (null as IPointerControl).FromScene(_currentViewMode.Value).OnLeftDown -= RoutePointerEvent;
+                    }
+
+                    void SubscribeToOtherPointer()
+                    {
+                         (null as IPointerControl).FromScene(value).OnLeftDown += RoutePointerEvent;
+
+                         if(value == BoardViewMode.OrthographicTopDown)
+                              (null as IPointerConfiguration).FromScene(/*value*/).
+                                   SetPadSize(screenSize: _boardMath.BoardSizeInPixels);
+                    }
+               }
           }
 
           internal void InitializeGame(out MoveEventArgs moveCheckerMethod)
@@ -42,23 +74,21 @@ namespace Runtime.GameBoard
                //SpawnCheckers(checkerPrefab, _boardModel.LowerCheckersPositions);
                //SpawnCheckers(checkerPrefab, _boardModel.UpperCheckersPositions);
 
+               ViewMode = BoardViewMode.OrthographicTopDown;
                moveCheckerMethod = null;
-          }
-
-          private void ConfigurePointerControl(GameBoardMath boardMath)
-          {
-               var pointerConfiguration = (null as IPointerConfiguration).FromScene();
-
-               pointerConfiguration.SetPadSize(screenSize: boardMath.BoardSizeInPixels);
-               pointerConfiguration.SetCoordsParseMethod(screenCoords => (byte)boardMath.ScreenToRawPosition(screenCoords));
           }
 
           private void SpawnCheckers(CheckerView checkerPrefab, IEnumerable<CheckerModel> checkersPositions)
           {
                foreach(CheckerModel checker in checkersPositions)
                {
-                    _boardView.SpawnChecker(checkerPrefab, checker);
+                    _boardView.SpawnChecker(checkerPrefab, checker, BoardSide.LowerSide);
                }
+          }
+
+          private void RoutePointerEvent(Vector2 pointerCoords)
+          {
+               OnBoardFieldClicked?.Invoke(_boardMath.ScreenToRawPosition(pointerCoords));
           }
      }
 }

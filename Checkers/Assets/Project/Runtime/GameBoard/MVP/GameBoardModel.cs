@@ -69,7 +69,7 @@ namespace Runtime.GameBoard
           protected override CheckerModel[] LowerCheckers { get; } = { 0, 2, 4, 6, 8, 11, 13, 15, 17, 19, 20, 22, 24, 26, 28 };
      }
 
-     internal static class GameBoardModelInitializer
+     internal static class BoardModelFactory
      {
           internal static IGameBoardModel CreateBoardModel(this CheckersGameType type)
           {

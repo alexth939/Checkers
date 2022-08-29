@@ -3,9 +3,9 @@ using Runtime.GameBoard;
 
 namespace Runtime.GameFlow
 {
-     internal static class TurnStatesCollectionInitializer
+     internal static class TurnStatesCollectionFactory
      {
-          internal static ITurnStatesCollection InitTurnStatesCollection(this CheckersGameType gameType, GameFlowModel flowModel)
+          internal static ITurnStatesCollection InitTurnStates(this CheckersGameType gameType, GameFlowModel flowModel)
           {
                return gameType switch
                {

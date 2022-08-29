@@ -8,8 +8,8 @@ namespace Runtime.ScenePresenters
      internal sealed class PlayScenePresenter: ScenePresenter
      {
           [SerializeField] private PlaySceneDIContainer _dependencies;
+          private IGameHost _gameHost;
 
-          [EasyButtons.Button]
           protected override void EnteringScene()
           {
                PlaySceneDependencyInjector.Expose(_dependencies);
@@ -22,20 +22,23 @@ namespace Runtime.ScenePresenters
                {
                     options.LocalPlayers = new()
                     {
-                         [BoardSide.LowerSide] = default,
-                         [BoardSide.UpperSide] = default
+                         [BoardSide.LowerSide] = new HumanBoardPlayer(gameBoard),
                     };
-                    options.CommandsChannel = default;
-                    options.MovesChannel = default;
                });
 
                var flowProcessor = new GameFlowProcessor(flowModel, moveCheckerMethod);
-               var gameHost = new GameHost(chosedGameType, flowModel);
+               _gameHost = new GameHost(chosedGameType, flowModel);
           }
 
           protected override void LeavingScene()
           {
                PlaySceneDependencyInjector.Dispose();
+          }
+
+          [EasyButtons.Button(Mode = EasyButtons.ButtonMode.EnabledInPlayMode)]
+          private void StartGame()
+          {
+               _gameHost.BeginGame();
           }
      }
 }
