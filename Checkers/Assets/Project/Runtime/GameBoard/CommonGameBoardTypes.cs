@@ -1,11 +1,5 @@
 ﻿namespace Runtime.GameBoard
 {
-    internal enum BoardViewMode
-    {
-        OrthographicTopDown,
-        PerspectiveFromSide
-    }
-
     internal enum CheckerType
     {
         RegularChecker,

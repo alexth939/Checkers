@@ -16,7 +16,6 @@ namespace Runtime.GameBoard
         private readonly IGameBoardView _boardView;
         private readonly IPointerConfiguration _pointerConfiguration;
         private readonly IPointerControl _pointerControl;
-        private BoardViewMode? _currentViewMode;
 
         internal GameBoardPresenter(
             IGameBoardView boardView,
@@ -42,34 +41,6 @@ namespace Runtime.GameBoard
 
         public event Action<Vector2Int> OnSelectedField;
 
-        internal BoardViewMode ViewMode
-        {
-            get => _currentViewMode.Value;
-            set
-            {
-                if(value == _currentViewMode)
-                    return;
-
-                UnsubscribeFromCurrentPointer();
-                SubscribeToOtherPointer();
-                _currentViewMode = value;
-
-                void UnsubscribeFromCurrentPointer()
-                {
-                    if(_currentViewMode.HasValue)
-                        _pointerControl.OnLeftDown -= RoutePointerEvent;
-                }
-
-                void SubscribeToOtherPointer()
-                {
-                    _pointerControl.OnLeftDown += RoutePointerEvent;
-
-                    if(value == BoardViewMode.OrthographicTopDown)
-                        _pointerConfiguration.SetPadSize(screenSize: _boardMath.BoardSizeInPixels);
-                }
-            }
-        }
-
         internal void InitializeGame(out MoveEventArgs moveCheckerMethod)
         {
             _boardView.ShowBoard();
@@ -80,7 +51,6 @@ namespace Runtime.GameBoard
             //SpawnCheckers(checkerPrefab, _boardModel.LowerCheckersPositions);
             //SpawnCheckers(checkerPrefab, _boardModel.UpperCheckersPositions);
 
-            ViewMode = BoardViewMode.OrthographicTopDown;
             moveCheckerMethod = null;
         }
 
