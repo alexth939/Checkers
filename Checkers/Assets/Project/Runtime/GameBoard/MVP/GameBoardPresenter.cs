@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using ProjectDefaults;
-using static Runtime.ScenePresenters.PlaySceneDependencyInjector;
 
 namespace Runtime.GameBoard
 {
@@ -15,12 +14,20 @@ namespace Runtime.GameBoard
         private readonly GameBoardMath _boardMath;
         private readonly IGameBoardModel _boardModel;
         private readonly IGameBoardView _boardView;
+        private readonly IPointerControl _pointerControl;
+        private readonly IPointerConfiguration _pointerConfiguration;
         private BoardViewMode? _currentViewMode;
 
-        internal GameBoardPresenter(CheckersGameType gameType)
+        internal GameBoardPresenter(
+            IGameBoardView boardView,
+            IPointerControl pointerControl,
+            IPointerConfiguration pointerConfiguration,
+            CheckersGameType gameType)
         {
-            _boardView = (null as IGameBoardView).FromScene();
+            _boardView = boardView;
             _boardModel = gameType.CreateBoardModel();
+            _pointerControl = pointerControl;
+            _pointerConfiguration = pointerConfiguration;
 
             _boardMath = new GameBoardMath(_boardModel, _boardView);
             _boardGenerators = new GameBoardGenerators(_boardModel, _boardMath);
@@ -50,16 +57,15 @@ namespace Runtime.GameBoard
                 void UnsubscribeFromCurrentPointer()
                 {
                     if(_currentViewMode.HasValue)
-                        (null as IPointerControl).FromScene(_currentViewMode.Value).OnLeftDown -= RoutePointerEvent;
+                        _pointerControl.OnLeftDown -= RoutePointerEvent;
                 }
 
                 void SubscribeToOtherPointer()
                 {
-                    (null as IPointerControl).FromScene(value).OnLeftDown += RoutePointerEvent;
+                    _pointerControl.OnLeftDown += RoutePointerEvent;
 
                     if(value == BoardViewMode.OrthographicTopDown)
-                        (null as IPointerConfiguration).FromScene(/*value*/).
-                             SetPadSize(screenSize: _boardMath.BoardSizeInPixels);
+                        _pointerConfiguration.SetPadSize(screenSize: _boardMath.BoardSizeInPixels);
                 }
             }
         }

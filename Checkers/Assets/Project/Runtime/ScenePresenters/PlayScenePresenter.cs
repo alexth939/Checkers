@@ -7,15 +7,19 @@ namespace Runtime.ScenePresenters
 {
     internal sealed class PlayScenePresenter: ScenePresenter
     {
-        [SerializeField] private PlaySceneDIContainer _dependencies;
+        [SerializeField] private UnityEngine.EventSystems.PointerControl _pointerControl;
+        [SerializeField] private GameBoardView _gameBoardView;
         private IGameHost _gameHost;
 
         protected override void OnEnteringScene()
         {
-            PlaySceneDependencyInjector.Expose(_dependencies);
-
             var chosedGameType = CheckersGameType.Checkers64;
-            var gameBoard = new GameBoardPresenter(chosedGameType);
+            var gameBoard = new GameBoardPresenter(
+                _gameBoardView,
+                _pointerControl,
+                _pointerControl,
+                chosedGameType);
+
             gameBoard.InitializeGame(out var moveCheckerMethod);
 
             var flowModel = new GameFlowModel(options =>
@@ -28,11 +32,6 @@ namespace Runtime.ScenePresenters
 
             var flowProcessor = new GameFlowProcessor(flowModel, moveCheckerMethod);
             _gameHost = new GameHost(chosedGameType, flowModel);
-        }
-
-        protected override void OnLeavingScene()
-        {
-            PlaySceneDependencyInjector.Dispose();
         }
 
         [EasyButtons.Button(Mode = EasyButtons.ButtonMode.EnabledInPlayMode)]
