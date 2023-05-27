@@ -10,7 +10,7 @@ namespace Runtime.ScenePresenters
         [SerializeField] private PlaySceneDIContainer _dependencies;
         private IGameHost _gameHost;
 
-        protected override void EnteringScene()
+        protected override void OnEnteringScene()
         {
             PlaySceneDependencyInjector.Expose(_dependencies);
 
