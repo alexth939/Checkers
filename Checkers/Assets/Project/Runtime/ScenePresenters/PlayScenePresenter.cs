@@ -30,7 +30,7 @@ namespace Runtime.ScenePresenters
             _gameHost = new GameHost(chosedGameType, flowModel);
         }
 
-        protected override void LeavingScene()
+        protected override void OnLeavingScene()
         {
             PlaySceneDependencyInjector.Dispose();
         }
