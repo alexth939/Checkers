@@ -14,19 +14,13 @@ namespace Runtime.GameBoard
         private readonly GameBoardMath _boardMath;
         private readonly IGameBoardModel _boardModel;
         private readonly IGameBoardView _boardView;
-        private readonly IPointerConfiguration _pointerConfiguration;
-        private readonly IPointerControl _pointerControl;
 
         internal GameBoardPresenter(
             IGameBoardView boardView,
-            IPointerControl pointerControl,
-            IPointerConfiguration pointerConfiguration,
             CheckersGameType gameType)
         {
             _boardView = boardView;
             _boardModel = gameType.CreateBoardModel();
-            _pointerControl = pointerControl;
-            _pointerConfiguration = pointerConfiguration;
 
             _boardMath = new GameBoardMath(_boardModel, _boardView);
             _boardGenerators = new GameBoardGenerators(_boardModel, _boardMath);
@@ -52,11 +46,6 @@ namespace Runtime.GameBoard
             //SpawnCheckers(checkerPrefab, _boardModel.UpperCheckersPositions);
 
             moveCheckerMethod = null;
-        }
-
-        private void RoutePointerEvent(Vector2 pointerCoords)
-        {
-            //OnSelectedField?.Invoke(_boardMath.ScreenToRawPosition(pointerCoords));
         }
 
         private void SpawnCheckers(CheckerView checkerPrefab, IEnumerable<CheckerModel> checkersPositions)

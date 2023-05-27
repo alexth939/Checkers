@@ -7,7 +7,6 @@ namespace Runtime.ScenePresenters
 {
     internal sealed class PlayScenePresenter: ScenePresenter
     {
-        [SerializeField] private UnityEngine.EventSystems.PointerControl _pointerControl;
         [SerializeField] private GameBoardView _gameBoardView;
         private IGameHost _gameHost;
 
@@ -16,8 +15,6 @@ namespace Runtime.ScenePresenters
             var chosedGameType = CheckersGameType.Checkers64;
             var gameBoard = new GameBoardPresenter(
                 _gameBoardView,
-                _pointerControl,
-                _pointerControl,
                 chosedGameType);
 
             gameBoard.InitializeGame(out var moveCheckerMethod);
