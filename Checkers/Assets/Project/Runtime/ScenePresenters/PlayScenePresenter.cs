@@ -1,4 +1,5 @@
-﻿using Runtime.GameBoard;
+﻿using ProjectDefaults;
+using Runtime.GameBoard;
 using Runtime.GameFlow;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,7 +18,10 @@ namespace Runtime.ScenePresenters
                 _gameBoardView,
                 chosedGameType);
 
-            gameBoard.InitializeGame(out var moveCheckerMethod);
+            gameBoard.Show();
+
+            // spawn checkers.
+            //var checkerPrefab = Resources.Load<CheckerView>(Paths.CheckerPrefabPath);
 
             var flowModel = new GameFlowModel(options =>
             {
@@ -27,7 +31,7 @@ namespace Runtime.ScenePresenters
                 };
             });
 
-            var flowProcessor = new GameFlowProcessor(flowModel, moveCheckerMethod);
+            var flowProcessor = new GameFlowProcessor(flowModel);
             _gameHost = new GameHost(chosedGameType, flowModel);
         }
 

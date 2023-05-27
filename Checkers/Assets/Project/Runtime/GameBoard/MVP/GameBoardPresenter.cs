@@ -34,25 +34,6 @@ namespace Runtime.GameBoard
 
         public event Action<Vector2Int> OnSelectedField;
 
-        internal void InitializeGame(out MoveEventArgs moveCheckerMethod)
-        {
-            _boardView.ShowBoard();
-
-            var checkerPrefab = Resources.Load<CheckerView>(Paths.CheckerPrefabPath);
-
-            SpawnCheckers(checkerPrefab, _boardModel.GetCheckersOf(BoardSide.BothSides));
-            //SpawnCheckers(checkerPrefab, _boardModel.LowerCheckersPositions);
-            //SpawnCheckers(checkerPrefab, _boardModel.UpperCheckersPositions);
-
-            moveCheckerMethod = null;
-        }
-
-        private void SpawnCheckers(CheckerView checkerPrefab, IEnumerable<CheckerModel> checkersPositions)
-        {
-            foreach(CheckerModel checker in checkersPositions)
-            {
-                _boardView.SpawnChecker(checkerPrefab, checker, BoardSide.LowerSide);
-            }
-        }
+        public void Show() => _boardView.ShowBoard();
     }
 }

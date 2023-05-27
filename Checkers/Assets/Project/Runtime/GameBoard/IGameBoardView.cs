@@ -11,11 +11,7 @@ namespace Runtime.GameBoard
 
         void ShowBoard();
 
-        void SpawnChecker(CheckerView view, CheckerModel model, BoardSide targetStash);
-
         void GetWorldAnchors(out Vector3 minBoardWorldAnchor, out Vector3 maxBoardWorldAnchor);
-
-        void MoveChecker(CheckerView checker, byte boardDestination, Action onDone = null);
 
         void HightlightFields(params byte[] rawPositions);
 

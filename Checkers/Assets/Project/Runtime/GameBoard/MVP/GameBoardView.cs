@@ -62,40 +62,6 @@ namespace Runtime.GameBoard
             _highlightingSptiteRenderer.enabled = false;
         }
 
-        public void SpawnChecker(CheckerView view, CheckerModel model, BoardSide targetStash)
-        {
-            if(RawToWorldParseMethod is null)
-                throw new NullReferenceException("U must init RawToWorldParseMethod first.");
-
-            var worldPosition = RawToWorldParseMethod.Invoke(model.Position);
-
-            var stash = targetStash switch
-            {
-                var side when side == BoardSide.LowerSide => _lowerPlayerStash,
-                var side when side == BoardSide.UpperSide => _upperPlayerStash,
-                var side when side == BoardSide.BothSides => throw new NotSupportedException(),
-                _ => null
-            };
-
-            Instantiate(view, worldPosition, _boardTransform.rotation, stash);
-        }
-
-        public void MoveChecker(CheckerView checker, byte boardDestination, Action onDone = null)
-        {
-            if(RawToWorldParseMethod is null)
-                throw new NullReferenceException("U must init RawToWorldParseMethod first.");
-
-            var worldDestination = RawToWorldParseMethod(boardDestination);
-
-            StartCoroutine(GameBoardTweeners.MoveChecker(args =>
-            {
-                args.Checker = checker;
-                args.Duration = ProjectConstants.CheckerMoveDuration;
-                args.Destination = worldDestination;
-                args.OnDone = onDone;
-            }));
-        }
-
         [ExecuteAlways]
         private void OnDrawGizmos()
         {

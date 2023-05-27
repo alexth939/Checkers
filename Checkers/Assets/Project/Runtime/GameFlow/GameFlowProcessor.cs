@@ -8,10 +8,9 @@ namespace Runtime.GameFlow
     {
         private readonly GameFlowModel _flowModel;
 
-        internal GameFlowProcessor(GameFlowModel flowModel, MoveEventArgs moveCheckerMethod)
+        internal GameFlowProcessor(GameFlowModel flowModel)
         {
             _flowModel = flowModel;
-            MoveChecker = moveCheckerMethod;
 
             CommandsChannel.OnPingRequest += HandlePingRequest;
             MovesChannel.OnPlayerMoved += HandlePlayerMoved;
