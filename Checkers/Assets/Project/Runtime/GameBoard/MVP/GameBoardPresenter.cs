@@ -40,7 +40,7 @@ namespace Runtime.GameBoard
             _boardMath.Dispose();
         }
 
-        public event Action<byte> OnBoardFieldClicked;
+        public event Action<Vector2Int> OnSelectedField;
 
         internal BoardViewMode ViewMode
         {
@@ -86,7 +86,7 @@ namespace Runtime.GameBoard
 
         private void RoutePointerEvent(Vector2 pointerCoords)
         {
-            OnBoardFieldClicked?.Invoke(_boardMath.ScreenToRawPosition(pointerCoords));
+            //OnSelectedField?.Invoke(_boardMath.ScreenToRawPosition(pointerCoords));
         }
 
         private void SpawnCheckers(CheckerView checkerPrefab, IEnumerable<CheckerModel> checkersPositions)
