@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using ProjectDefaults;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Runtime.GameBoard
 {
