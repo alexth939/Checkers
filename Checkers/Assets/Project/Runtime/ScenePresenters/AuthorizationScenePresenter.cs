@@ -13,7 +13,7 @@ namespace Runtime.ScenePresenters
      {
           [SerializeField] private AuthorizationSceneContainer _dependencies;
 
-          protected override void EnteringScene()
+          protected override void OnEnteringScene()
           {
                var _sceneNavigator = new AuthorizationSceneNavigator(sceneWindows: new()
                {

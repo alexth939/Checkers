@@ -15,4 +15,12 @@ namespace Runtime.GameBoard
           void HightlightFields(params byte[] rawPositions);
           void DimHightlightedFields();
      }
+﻿using UnityEngine;
+
+namespace Runtime.GameBoard
+{
+    public interface IGameBoardView
+    {
+        void ShowBoard(Texture2D boardTexture);
+    }
 }
