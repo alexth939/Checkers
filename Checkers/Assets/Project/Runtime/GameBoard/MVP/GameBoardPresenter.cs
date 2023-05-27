@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using ProjectDefaults;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using ProjectDefaults;
 
 namespace Runtime.GameBoard
 {
@@ -14,8 +14,8 @@ namespace Runtime.GameBoard
         private readonly GameBoardMath _boardMath;
         private readonly IGameBoardModel _boardModel;
         private readonly IGameBoardView _boardView;
-        private readonly IPointerControl _pointerControl;
         private readonly IPointerConfiguration _pointerConfiguration;
+        private readonly IPointerControl _pointerControl;
         private BoardViewMode? _currentViewMode;
 
         internal GameBoardPresenter(
@@ -84,17 +84,17 @@ namespace Runtime.GameBoard
             moveCheckerMethod = null;
         }
 
+        private void RoutePointerEvent(Vector2 pointerCoords)
+        {
+            OnBoardFieldClicked?.Invoke(_boardMath.ScreenToRawPosition(pointerCoords));
+        }
+
         private void SpawnCheckers(CheckerView checkerPrefab, IEnumerable<CheckerModel> checkersPositions)
         {
             foreach(CheckerModel checker in checkersPositions)
             {
                 _boardView.SpawnChecker(checkerPrefab, checker, BoardSide.LowerSide);
             }
-        }
-
-        private void RoutePointerEvent(Vector2 pointerCoords)
-        {
-            OnBoardFieldClicked?.Invoke(_boardMath.ScreenToRawPosition(pointerCoords));
         }
     }
 }
