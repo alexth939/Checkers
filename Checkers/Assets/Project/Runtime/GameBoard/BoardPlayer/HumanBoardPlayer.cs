@@ -1,49 +1,48 @@
 ﻿using System;
 using UnityEngine.EventSystems;
 using External.DelegateExtensions;
-using static Runtime.ScenePresenters.PlaySceneDependencyInjector;
 
 namespace Runtime.GameBoard
 {
-     internal sealed class HumanBoardPlayer: IGameBoardPlayer
-     {
-          private IHumanMindInterpreter _mindInterpreter;
+    internal sealed class HumanBoardPlayer: IGameBoardPlayer
+    {
+        private IHumanMindInterpreter _mindInterpreter;
 
-          internal HumanBoardPlayer(IGameBoardPresenter gameBoard)
-          {
-               //argsSetter.Extract(out var results);
+        internal HumanBoardPlayer(IGameBoardPresenter gameBoard)
+        {
+            //argsSetter.Extract(out var results);
 
-               _mindInterpreter = new HumanMindInterpreter(args =>
-               {
+            _mindInterpreter = new HumanMindInterpreter(args =>
+            {
 
-               });
-          }
+            });
+        }
 
-          private Action<byte[]> MoveChecker;
+        private Action<byte[]> MoveChecker;
 
-          public void BeginTurn(Action<byte[]> value)
-          {
-               throw new NotImplementedException();
-          }
+        public void BeginTurn(Action<byte[]> value)
+        {
+            throw new NotImplementedException();
+        }
 
-          public void CancelTurn()
-          {
-               throw new NotImplementedException();
-          }
+        public void CancelTurn()
+        {
+            throw new NotImplementedException();
+        }
 
-          public void IsReady(Action positiveResponse)
-          {
-               positiveResponse.Invoke();
-          }
+        public void IsReady(Action positiveResponse)
+        {
+            positiveResponse.Invoke();
+        }
 
-          internal void MakeMove(Action<byte[]> move)
-          {
-               
-          }
+        internal void MakeMove(Action<byte[]> move)
+        {
 
-          internal class PlayerDataPort
-          {
+        }
 
-          }
-     }
+        internal class PlayerDataPort
+        {
+
+        }
+    }
 }
