@@ -13,7 +13,6 @@ namespace Runtime.GameBoard
             _frontSprite.size = size * 0.9f;
         }
 
-        [EasyButtons.Button]
         internal void SetColor(Color color)
         {
             _frontSprite.color = color;

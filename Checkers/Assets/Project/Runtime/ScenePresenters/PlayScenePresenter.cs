@@ -31,7 +31,6 @@ namespace Runtime.ScenePresenters
             _gameHost = new GameHost(chosedGameType, flowModel);
         }
 
-        [EasyButtons.Button(Mode = EasyButtons.ButtonMode.EnabledInPlayMode)]
         private void StartGame()
         {
             _gameHost.BeginGame();
