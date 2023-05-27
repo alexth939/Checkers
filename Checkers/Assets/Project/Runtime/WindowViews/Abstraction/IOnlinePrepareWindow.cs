@@ -1,6 +1,6 @@
 ﻿namespace Runtime.WindowViews
 {
-     internal interface IOnlinePrepareWindow
-     {
-     }
+    internal interface IOnlinePrepareWindow
+    {
+    }
 }

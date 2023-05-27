@@ -3,12 +3,12 @@
 /// raw position - is the index of the cell, starting at left buttom corner
 /// board coords - the v2Int cell coordinates on board, starting at left buttom corner
 /// world coords - the v3 cell coordinates in world position
-/// 
+///
 /// syntax:
 /// raw position: raw origin, raw destination
 /// board coords: board origin, board destination
 /// world coords: world origin, world destination
-/// 
+///
 /// !!! don't ever ever ever set same position in several {UpperCheckers+LowerCheckers} items!!!
 /// </summary>
 
@@ -16,7 +16,9 @@ using System;
 using System.Collections.Generic;
 
 #if UNITY_EDITOR
+
 using System.Linq;
+
 #endif
 
 namespace Runtime.GameBoard

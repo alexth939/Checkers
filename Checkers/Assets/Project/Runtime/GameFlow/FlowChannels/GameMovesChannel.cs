@@ -3,13 +3,13 @@ using Runtime.GameBoard;
 
 namespace Runtime.GameFlow
 {
-     internal class GameMovesChannel
-     {
-          internal event MoveEventArgs OnPlayerMoved;
+    internal class GameMovesChannel
+    {
+        internal event MoveEventArgs OnPlayerMoved;
 
-          internal void PostMove(BoardSide target)
-          {
-               throw new NotImplementedException();
-          }
-     }
+        internal void PostMove(BoardSide target)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

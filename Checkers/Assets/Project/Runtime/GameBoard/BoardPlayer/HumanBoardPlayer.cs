@@ -1,6 +1,4 @@
 ﻿using System;
-using UnityEngine.EventSystems;
-using External.DelegateExtensions;
 
 namespace Runtime.GameBoard
 {
@@ -14,7 +12,6 @@ namespace Runtime.GameBoard
 
             _mindInterpreter = new HumanMindInterpreter(args =>
             {
-
             });
         }
 
@@ -37,12 +34,10 @@ namespace Runtime.GameBoard
 
         internal void MakeMove(Action<byte[]> move)
         {
-
         }
 
         internal class PlayerDataPort
         {
-
         }
     }
 }

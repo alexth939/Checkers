@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-using Runtime.GameBoard;
+﻿using Runtime.GameBoard;
 using Runtime.GameFlow;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Runtime.ScenePresenters
 {

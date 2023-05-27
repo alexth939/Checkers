@@ -1,106 +1,106 @@
 ﻿using System;
-using UnityEngine;
 using ProjectDefaults;
+using UnityEngine;
 
 namespace Runtime.GameBoard
 {
-     internal sealed class GameBoardView: MonoBehaviour, IGameBoardView
-     {
-          [SerializeField] private SpriteRenderer _boardSpriteRenderer;
-          [SerializeField] private SpriteRenderer _highlightingSptiteRenderer;
-          [SerializeField] private Transform _boardTransform;
-          [SerializeField] private Transform _upperPlayerStash;
-          [SerializeField] private Transform _lowerPlayerStash;
+    internal sealed class GameBoardView: MonoBehaviour, IGameBoardView
+    {
+        [SerializeField] private SpriteRenderer _boardSpriteRenderer;
+        [SerializeField] private SpriteRenderer _highlightingSptiteRenderer;
+        [SerializeField] private Transform _boardTransform;
+        [SerializeField] private Transform _upperPlayerStash;
+        [SerializeField] private Transform _lowerPlayerStash;
 
-          private Func<Sprite> BoardSpriteGenerationMethod;
-          private Func<byte[], Sprite> HighlightedMapGenerationMethod;
-          private Func<byte, Vector3> RawToWorldParseMethod;
+        private Func<Sprite> BoardSpriteGenerationMethod;
+        private Func<byte[], Sprite> HighlightedMapGenerationMethod;
+        private Func<byte, Vector3> RawToWorldParseMethod;
 
-          public Vector2 SpriteSize => _boardSpriteRenderer.size;
+        public Vector2 SpriteSize => _boardSpriteRenderer.size;
 
-          public void GetWorldAnchors(out Vector3 minBoardAnchor, out Vector3 maxBoardAnchor)
-          {
-               minBoardAnchor = _boardSpriteRenderer.bounds.min;
-               maxBoardAnchor = _boardSpriteRenderer.bounds.max;
-          }
+        public void GetWorldAnchors(out Vector3 minBoardAnchor, out Vector3 maxBoardAnchor)
+        {
+            minBoardAnchor = _boardSpriteRenderer.bounds.min;
+            maxBoardAnchor = _boardSpriteRenderer.bounds.max;
+        }
 
-          public void Init(GameBoardMath boardMath, GameBoardGenerators boardGenerators)
-          {
-               RawToWorldParseMethod = rawPosition =>
-               {
-                    Vector2Int boardCoords = boardMath.RawToBoardCoords(in rawPosition);
-                    Vector3 worldCoords = boardMath.BoardToWorldCoords(in boardCoords);
-                    return worldCoords;
-               };
+        public void Init(GameBoardMath boardMath, GameBoardGenerators boardGenerators)
+        {
+            RawToWorldParseMethod = rawPosition =>
+            {
+                Vector2Int boardCoords = boardMath.RawToBoardCoords(in rawPosition);
+                Vector3 worldCoords = boardMath.BoardToWorldCoords(in boardCoords);
+                return worldCoords;
+            };
 
-               BoardSpriteGenerationMethod = boardGenerators.GenerateBoardSprite;
-               HighlightedMapGenerationMethod = boardGenerators.GenerateHighlightedFieldsMap;
-          }
+            BoardSpriteGenerationMethod = boardGenerators.GenerateBoardSprite;
+            HighlightedMapGenerationMethod = boardGenerators.GenerateHighlightedFieldsMap;
+        }
 
-          public void ShowBoard()
-          {
-               if(BoardSpriteGenerationMethod is null)
-                    throw new NullReferenceException("U must init BoardSpriteGenerationMethod first.");
+        public void ShowBoard()
+        {
+            if(BoardSpriteGenerationMethod is null)
+                throw new NullReferenceException("U must init BoardSpriteGenerationMethod first.");
 
-               var boardSprite = BoardSpriteGenerationMethod.Invoke();
+            var boardSprite = BoardSpriteGenerationMethod.Invoke();
 
-               _boardSpriteRenderer.sprite = boardSprite;
-          }
+            _boardSpriteRenderer.sprite = boardSprite;
+        }
 
-          public void HightlightFields(params byte[] rawPositions)
-          {
-               if(HighlightedMapGenerationMethod is null)
-                    throw new NullReferenceException("U must init HighlightedMapGenerationMethod first.");
+        public void HightlightFields(params byte[] rawPositions)
+        {
+            if(HighlightedMapGenerationMethod is null)
+                throw new NullReferenceException("U must init HighlightedMapGenerationMethod first.");
 
-               _highlightingSptiteRenderer.enabled = true;
+            _highlightingSptiteRenderer.enabled = true;
 
-               _highlightingSptiteRenderer.sprite = HighlightedMapGenerationMethod.Invoke(rawPositions);
-          }
+            _highlightingSptiteRenderer.sprite = HighlightedMapGenerationMethod.Invoke(rawPositions);
+        }
 
-          public void DimHightlightedFields()
-          {
-               _highlightingSptiteRenderer.enabled = false;
-          }
+        public void DimHightlightedFields()
+        {
+            _highlightingSptiteRenderer.enabled = false;
+        }
 
-          public void SpawnChecker(CheckerView view, CheckerModel model, BoardSide targetStash)
-          {
-               if(RawToWorldParseMethod is null)
-                    throw new NullReferenceException("U must init RawToWorldParseMethod first.");
+        public void SpawnChecker(CheckerView view, CheckerModel model, BoardSide targetStash)
+        {
+            if(RawToWorldParseMethod is null)
+                throw new NullReferenceException("U must init RawToWorldParseMethod first.");
 
-               var worldPosition = RawToWorldParseMethod.Invoke(model.Position);
+            var worldPosition = RawToWorldParseMethod.Invoke(model.Position);
 
-               var stash = targetStash switch
-               {
-                    var side when side == BoardSide.LowerSide => _lowerPlayerStash,
-                    var side when side == BoardSide.UpperSide => _upperPlayerStash,
-                    var side when side == BoardSide.BothSides => throw new NotSupportedException(),
-                    _ => null
-               };
+            var stash = targetStash switch
+            {
+                var side when side == BoardSide.LowerSide => _lowerPlayerStash,
+                var side when side == BoardSide.UpperSide => _upperPlayerStash,
+                var side when side == BoardSide.BothSides => throw new NotSupportedException(),
+                _ => null
+            };
 
-               Instantiate(view, worldPosition, _boardTransform.rotation, stash);
-          }
+            Instantiate(view, worldPosition, _boardTransform.rotation, stash);
+        }
 
-          public void MoveChecker(CheckerView checker, byte boardDestination, Action onDone = null)
-          {
-               if(RawToWorldParseMethod is null)
-                    throw new NullReferenceException("U must init RawToWorldParseMethod first.");
+        public void MoveChecker(CheckerView checker, byte boardDestination, Action onDone = null)
+        {
+            if(RawToWorldParseMethod is null)
+                throw new NullReferenceException("U must init RawToWorldParseMethod first.");
 
-               var worldDestination = RawToWorldParseMethod(boardDestination);
+            var worldDestination = RawToWorldParseMethod(boardDestination);
 
-               StartCoroutine(GameBoardTweeners.MoveChecker(args =>
-               {
-                    args.Checker = checker;
-                    args.Duration = ProjectConstants.CheckerMoveDuration;
-                    args.Destination = worldDestination;
-                    args.OnDone = onDone;
-               }));
-          }
+            StartCoroutine(GameBoardTweeners.MoveChecker(args =>
+            {
+                args.Checker = checker;
+                args.Duration = ProjectConstants.CheckerMoveDuration;
+                args.Destination = worldDestination;
+                args.OnDone = onDone;
+            }));
+        }
 
-          [ExecuteAlways]
-          private void OnDrawGizmos()
-          {
-               Gizmos.color = Color.black;
-               Gizmos.DrawWireCube(_boardSpriteRenderer.bounds.center, _boardSpriteRenderer.bounds.extents * 2);
-          }
-     }
+        [ExecuteAlways]
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.black;
+            Gizmos.DrawWireCube(_boardSpriteRenderer.bounds.center, _boardSpriteRenderer.bounds.extents * 2);
+        }
+    }
 }

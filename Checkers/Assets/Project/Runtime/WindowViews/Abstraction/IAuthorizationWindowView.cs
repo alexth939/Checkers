@@ -3,13 +3,13 @@ using UnityEngine.Events;
 
 namespace Runtime.WindowViews
 {
-     internal interface IAuthorizationWindowView: IPopupView
-     {
-          string GetEmail();
+    internal interface IAuthorizationWindowView: IPopupView
+    {
+        string GetEmail();
 
-          string GetPassword();
+        string GetPassword();
 
-          UnityEvent OnGoBackRequest { get; }
-          UnityEvent OnAuthorizeRequest { get; }
-     }
+        UnityEvent OnGoBackRequest { get; }
+        UnityEvent OnAuthorizeRequest { get; }
+    }
 }

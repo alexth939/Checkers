@@ -1,7 +1,7 @@
 ﻿namespace Runtime.GameFlow
 {
-     internal interface IGameHost
-     {
-          void BeginGame();
-     }
+    internal interface IGameHost
+    {
+        void BeginGame();
+    }
 }

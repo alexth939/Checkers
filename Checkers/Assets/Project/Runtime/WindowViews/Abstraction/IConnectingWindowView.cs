@@ -2,7 +2,7 @@
 
 namespace Runtime.WindowViews
 {
-     internal interface IConnectingWindowView: IPopupView
-     {
-     }
+    internal interface IConnectingWindowView: IPopupView
+    {
+    }
 }
