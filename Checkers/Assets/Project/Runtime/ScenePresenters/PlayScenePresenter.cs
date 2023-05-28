@@ -19,6 +19,8 @@ namespace Runtime.ScenePresenters
                 chosedGameType);
 
             gameBoard.Show();
+            gameBoard.OnClickedField += new System.Action<Vector2Int>(b => { Debug.Log($"ggg"); });
+            gameBoard.IsClickingEnabled = true;
 
             // spawn checkers.
             //var checkerPrefab = Resources.Load<CheckerView>(Paths.CheckerPrefabPath);

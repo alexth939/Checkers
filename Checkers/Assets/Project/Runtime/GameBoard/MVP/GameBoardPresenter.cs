@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using ProjectDefaults;
 using UnityEngine;
 
 namespace Runtime.GameBoard
@@ -32,7 +30,28 @@ namespace Runtime.GameBoard
             _boardMath.Dispose();
         }
 
-        public event Action<Vector2Int> OnSelectedField;
+        public event Action<Vector2Int> OnClickedField;
+
+        public bool IsClickingEnabled
+        {
+            set
+            {
+                if(value == true)
+                    _boardView.OnClickedBoard += HandleBoardClicked;
+                else
+                    _boardView.OnClickedBoard -= HandleBoardClicked;
+            }
+        }
+
+        private void HandleBoardClicked()
+        {
+            Ray pointerRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            _ = Physics.Raycast(pointerRay, out var hitInfo);
+            Vector2Int boardCoords = _boardMath.WorldToBoardCoords(hitInfo.point);
+
+            OnClickedField?.Invoke(boardCoords);
+        }
 
         public void Show() => _boardView.ShowBoard();
     }

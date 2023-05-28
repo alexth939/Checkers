@@ -1,22 +1,27 @@
 ﻿using System;
-using ProjectDefaults;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Runtime.GameBoard
 {
-    internal sealed class GameBoardView: MonoBehaviour, IGameBoardView
+    internal sealed class GameBoardView: MonoBehaviour, IGameBoardView, IPointerDownHandler
     {
         [SerializeField] private SpriteRenderer _boardSpriteRenderer;
         [SerializeField] private SpriteRenderer _highlightingSptiteRenderer;
         [SerializeField] private Transform _boardTransform;
-        [SerializeField] private Transform _upperPlayerStash;
-        [SerializeField] private Transform _lowerPlayerStash;
 
         private Func<Sprite> BoardSpriteGenerationMethod;
         private Func<byte[], Sprite> HighlightedMapGenerationMethod;
         private Func<byte, Vector3> RawToWorldParseMethod;
 
+        public event Action<PointerEventData> OnUserClick;
+
         public Vector2 SpriteSize => _boardSpriteRenderer.size;
+
+        public (Vector3, Vector3) GetBoardCorners()
+        {
+            return (_boardSpriteRenderer.bounds.min, _boardSpriteRenderer.bounds.max);
+        }
 
         public void GetWorldAnchors(out Vector3 minBoardAnchor, out Vector3 maxBoardAnchor)
         {
@@ -66,7 +71,12 @@ namespace Runtime.GameBoard
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.black;
-            Gizmos.DrawWireCube(_boardSpriteRenderer.bounds.center, _boardSpriteRenderer.bounds.extents * 2);
+            Gizmos.DrawWireCube(_boardSpriteRenderer.bounds.center,
+                _boardSpriteRenderer.bounds.extents * 2);
         }
+
+        // Don't forget to configure the collider's size so it fits only the clickable area.
+        // Don't forget to include "Physics Raycaster" in ur camera.
+        public void OnPointerDown(PointerEventData eventData) => OnUserClick.Invoke(eventData);
     }
 }

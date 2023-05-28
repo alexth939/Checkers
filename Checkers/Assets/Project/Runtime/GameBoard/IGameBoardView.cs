@@ -1,10 +1,13 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Runtime.GameBoard
 {
     internal interface IGameBoardView
     {
+        event Action<PointerEventData> OnUserClick;
+
         Vector2 SpriteSize { get; }
 
         void Init(GameBoardMath boardMath, GameBoardGenerators boardGenerators);

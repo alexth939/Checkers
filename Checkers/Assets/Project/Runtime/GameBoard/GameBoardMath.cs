@@ -98,5 +98,10 @@ namespace Runtime.GameBoard
 
             return (byte)(boardCoords.y * _boardModel.BoardSize + boardCoords.x);
         }
+
+        public Vector2Int WorldToBoardCoords(Vector3 worldPoint)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -5,6 +5,6 @@ namespace Runtime.GameBoard
 {
     internal interface IGameBoardPresenter
     {
-        event Action<Vector2Int> OnSelectedField;
+        event Action<Vector2Int> OnClickedField;
     }
 }
