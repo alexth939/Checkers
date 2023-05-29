@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Runtime.GameBoard
 {
@@ -37,20 +38,33 @@ namespace Runtime.GameBoard
             set
             {
                 if(value == true)
-                    _boardView.OnClickedBoard += HandleBoardClicked;
+                    _boardView.OnBoardClick += HandleBoardClicked;
                 else
-                    _boardView.OnClickedBoard -= HandleBoardClicked;
+                    _boardView.OnBoardClick -= HandleBoardClicked;
             }
         }
 
-        private void HandleBoardClicked()
+        private void HandleBoardClicked(PointerEventData eventData)
         {
-            Ray pointerRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Vector3 clickWorldPosition = eventData.pointerCurrentRaycast.worldPosition;
+            var corners = _boardView.GetBoardCorners();
 
-            _ = Physics.Raycast(pointerRay, out var hitInfo);
-            Vector2Int boardCoords = _boardMath.WorldToBoardCoords(hitInfo.point);
+            // Clamped to board coords: from 0 to plane.width.
+            var clampedBoardCoords = new Vector2()
+            {
+                x = Mathf.InverseLerp(corners.LowerLeft.x, corners.UpperRight.x, clickWorldPosition.x),
+                y = Mathf.InverseLerp(corners.LowerLeft.y, corners.UpperRight.y, clickWorldPosition.y)
+            };
 
-            OnClickedField?.Invoke(boardCoords);
+            // Field coords: x: 0 to fieldsCount in row.
+            //              y: 0 to fieldsCount in column.
+            var fieldBoardCoords = new Vector2Int()
+            {
+                x = Mathf.FloorToInt(clampedBoardCoords.x * _boardModel.BoardSize),
+                y = Mathf.FloorToInt(clampedBoardCoords.y * _boardModel.BoardSize)
+            };
+
+            OnClickedField?.Invoke(fieldBoardCoords);
         }
 
         public void Show() => _boardView.ShowBoard();

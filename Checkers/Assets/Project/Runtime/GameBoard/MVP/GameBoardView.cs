@@ -14,19 +14,13 @@ namespace Runtime.GameBoard
         private Func<byte[], Sprite> HighlightedMapGenerationMethod;
         private Func<byte, Vector3> RawToWorldParseMethod;
 
-        public event Action<PointerEventData> OnUserClick;
+        public event Action<PointerEventData> OnBoardClick;
 
         public Vector2 SpriteSize => _boardSpriteRenderer.size;
 
-        public (Vector3, Vector3) GetBoardCorners()
+        public (Vector3 LowerLeft, Vector3 UpperRight) GetBoardCorners()
         {
             return (_boardSpriteRenderer.bounds.min, _boardSpriteRenderer.bounds.max);
-        }
-
-        public void GetWorldAnchors(out Vector3 minBoardAnchor, out Vector3 maxBoardAnchor)
-        {
-            minBoardAnchor = _boardSpriteRenderer.bounds.min;
-            maxBoardAnchor = _boardSpriteRenderer.bounds.max;
         }
 
         public void Init(GameBoardMath boardMath, GameBoardGenerators boardGenerators)
@@ -77,6 +71,6 @@ namespace Runtime.GameBoard
 
         // Don't forget to configure the collider's size so it fits only the clickable area.
         // Don't forget to include "Physics Raycaster" in ur camera.
-        public void OnPointerDown(PointerEventData eventData) => OnUserClick.Invoke(eventData);
+        public void OnPointerDown(PointerEventData eventData) => OnBoardClick.Invoke(eventData);
     }
 }

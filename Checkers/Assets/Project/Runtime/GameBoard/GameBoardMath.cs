@@ -22,7 +22,7 @@ namespace Runtime.GameBoard
 
             _singleInstanceHolder = this;
 
-            boardView.GetWorldAnchors(out _minBoardWorldAnchor, out _maxBoardWorldAnchor);
+            (_minBoardWorldAnchor, _maxBoardWorldAnchor) = boardView.GetBoardCorners();
             _boardModel = boardModel;
 
             _cellRatio = new()

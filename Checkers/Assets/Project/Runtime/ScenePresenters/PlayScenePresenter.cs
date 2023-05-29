@@ -19,7 +19,7 @@ namespace Runtime.ScenePresenters
                 chosedGameType);
 
             gameBoard.Show();
-            gameBoard.OnClickedField += new System.Action<Vector2Int>(b => { Debug.Log($"ggg"); });
+            gameBoard.OnClickedField += new System.Action<Vector2Int>(b => { Debug.Log($"last: {b}"); });
             gameBoard.IsClickingEnabled = true;
 
             // spawn checkers.

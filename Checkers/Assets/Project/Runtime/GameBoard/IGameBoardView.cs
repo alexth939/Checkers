@@ -6,7 +6,7 @@ namespace Runtime.GameBoard
 {
     internal interface IGameBoardView
     {
-        event Action<PointerEventData> OnUserClick;
+        event Action<PointerEventData> OnBoardClick;
 
         Vector2 SpriteSize { get; }
 
@@ -14,7 +14,10 @@ namespace Runtime.GameBoard
 
         void ShowBoard();
 
-        void GetWorldAnchors(out Vector3 minBoardWorldAnchor, out Vector3 maxBoardWorldAnchor);
+        /// <summary>
+        ///     In world coordinates.
+        /// </summary>
+        (Vector3 LowerLeft, Vector3 UpperRight) GetBoardCorners();
 
         void HightlightFields(params byte[] rawPositions);
 
